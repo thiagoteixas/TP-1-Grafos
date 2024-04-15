@@ -1,4 +1,16 @@
-// CREDITOS DO CODIGO: https://acervolima.com/como-criar-um-grafico-aleatorio-usando-a-geracao-de-borda-aleatoria-em-java/
+/*
+ *  TP01
+ * 
+ *  Pontifícia Universidade Católica de Minas Gerais  
+ *  Curso: Ciência da Computação 
+ *  Disciplina: Teoria dos Grafos e Computabilidade 
+ *  Professor : Zenilton Kleber Gonçalves do Patrocínio Júnior
+ * 
+ *  Aluno: Pedro Madeira, Thiago Teixeira e Fabio Franco
+ * 
+ * Creditos: https://acervolima.com/como-criar-um-grafico-aleatorio-usando-a-geracao-de-borda-aleatoria-em-java/
+
+ */
 
 // Create a Random Graph Using
 // Random Edge Generation in Java

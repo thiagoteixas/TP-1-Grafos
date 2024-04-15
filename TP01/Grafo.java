@@ -1,7 +1,21 @@
+/*
+ *  TP01
+ * 
+ *  Pontifícia Universidade Católica de Minas Gerais  
+ *  Curso: Ciência da Computação 
+ *  Disciplina: Teoria dos Grafos e Computabilidade 
+ *  Professor : Zenilton Kleber Gonçalves do Patrocínio Júnior
+ * 
+ *  Aluno: Pedro Madeira, Thiago Teixeira e Fabio
+ * 
+ * Creditos: 
+ */
+
 import java.util.*;
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Grafo {
     private int V; // número de vértices
@@ -32,14 +46,14 @@ public class Grafo {
     }
 
     // Método para verificar a existência de dois caminhos internamente disjuntos
-    private boolean hasTwoDisjointPaths(int u, int v) { //tem que usar essa funcaaaaaaaaaooooooooooooo
-    System.out.println("prim " + u);
-        System.out.println("sec " + v);
-        boolean[] visitedFirst = new boolean[V];
-        boolean[] visitedSecond = new boolean[V];
+    private boolean hasTwoDisjointPaths(int u, int v) {
+    // System.out.println("prim " + u);
+    // System.out.println("sec " + v);
+    boolean[] visitedFirst = new boolean[V];
+    boolean[] visitedSecond = new boolean[V];
 
-        dfs(u, visitedFirst, v);
-        return visitedFirst[v] && dfs(u, visitedSecond, -1, visitedFirst);
+    dfs(u, visitedFirst, v);
+    return visitedFirst[v] && dfs(u, visitedSecond, -1, visitedFirst);
     }
 
     private void dfs(int u, boolean[] visited, int avoid) {
@@ -66,6 +80,41 @@ public class Grafo {
             }
         }
         return false;
+    }
+
+    public void encontrarCaminhosDisjuntos(int origem, int destino) {
+        List<List<Integer>> todosCaminhos = new ArrayList<>();
+        List<Integer> caminhoAtual = new ArrayList<>();
+        boolean[] visitado = new boolean[V];
+
+        encontrarCaminhosDisjuntosUtil(origem, destino, visitado, caminhoAtual, todosCaminhos);
+
+        // Exibir a quantidade de caminhos encontrados
+        System.out.println("Quantidade de caminhos disjuntos: " + todosCaminhos.size());
+
+        // Listar os caminhos encontrados
+        for (List<Integer> caminho : todosCaminhos) {
+            System.out.println(caminho);
+        }
+    }
+
+    private void encontrarCaminhosDisjuntosUtil(int u, int destino, boolean[] visitado, List<Integer> caminhoAtual, List<List<Integer>> todosCaminhos) {
+        visitado[u] = true;
+        caminhoAtual.add(u);
+
+        if (u == destino) {
+            todosCaminhos.add(new ArrayList<>(caminhoAtual));
+        } else {
+            for (int vizinho : adj[u]) {
+                if (!visitado[vizinho]) {
+                    encontrarCaminhosDisjuntosUtil(vizinho, destino, visitado, caminhoAtual, todosCaminhos);
+                }
+            }
+        }
+
+        // Remover o vértice atual do caminho e marcar como não visitado para explorar outros caminhos
+        caminhoAtual.remove(caminhoAtual.size() - 1);
+        visitado[u] = false;
     }
 
     // Método para identificar articulações
@@ -168,57 +217,71 @@ public class Grafo {
         }
     }
 
-    public static void main(String[] args) {
-        // Crie o grafo como no exemplo e teste os métodos.
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Digite o número de vértices: ");
-        int numVertices;
-        try {
-            numVertices = Integer.parseInt(scanner.nextLine()); // Usa nextLine e depois converte para inteiro
-        } catch (NumberFormatException e) {
-            System.out.println("Número inválido. Usando 10 como padrão.");
-            numVertices = 10; // Valor padrão caso haja erro na entrada
-        }
-        scanner.close();
+    public static void main(String[] args) throws Exception {
+        // Scanner scanner = new Scanner(System.in);
+        // System.out.print("Digite o número de vértices: ");
+        // int numVertices;
+        // try {
+        //     numVertices = Integer.parseInt(scanner.nextLine()); // Usa nextLine e depois converte para inteiro
+        // } catch (NumberFormatException e) {
+        //     System.out.println("Número inválido. Usando 10 como padrão.");
+        //     numVertices = 10; // Valor padrão caso haja erro na entrada
+        // }
+        // scanner.close();
 
-        //int numVertices = 1000; // receber a entrada do usuário
-
-        GFGRandomGraph randomGraph = new GFGRandomGraph(numVertices);
+        // GFGRandomGraph randomGraph = new GFGRandomGraph(numVertices);
         List<Integer> v = new ArrayList<Integer>();
         List<Integer> w = new ArrayList<Integer>();
         Boolean hasCycles = false;
 
-        JFrame frame = new JFrame("Visualização do Grafo");
-        frame.setSize(new Dimension(800, 600));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Grafo g = new Grafo(numVertices); // Ajuste o número de vértices conforme necessário.
-        GraphPanel graphPanel = new GraphPanel(g);
-        frame.add(graphPanel); // Ajuste para o seu grafo
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        graphPanel.calculateVertexPositions(); // Chamada após o painel ser exibido
+        // JFrame frame = new JFrame("Visualização do Grafo");
+        // frame.setSize(new Dimension(1680, 1050));
+        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Grafo g = new Grafo(numVertices); // Ajuste o número de vértices conforme necessário.
+        // GraphPanel graphPanel = new GraphPanel(g);
+        // frame.add(graphPanel); // Ajuste para o seu grafo
+        // frame.pack();
+        // frame.setLocationRelativeTo(null);
+        // frame.setVisible(true);
+        // graphPanel.calculateVertexPositions(); // Chamada após o painel ser exibido
 
-        for (int i = 0; i < randomGraph.adjacencyList.size(); i++) {
-            List<Integer> list = randomGraph.adjacencyList.get(i);
-            if (list.isEmpty()) { }
-            else {
-                int size = list.size();
-                for (int j = 0; j < size; j++) {
-                    if(list.get(j) != i) {
-                    g.addAresta(i, list.get(j));
-                    v.add(i);
-                    w.add(list.get(j));
-                    // System.out.println("g.addAresta(" +i+ ", " +list.get(j)+ ")"); //apena para debugg (excluir no cod final)
-                    }
-                }
-            }
+        /*
+         * Conseguimos propor para testes 3 tipos de grafos com tamanhos diferentes:
+         * - graph11.txt >> grafo igual ao mostrado no exemplo do PDF do TP
+         * - graph100.txt >> grafo aleatório de 100 vertices
+         * - graph100.txt >> grafo aleatório de 1000 vertices
+         * 
+         *  Deixamos tambem exemplos de codigos (FUNCIONAIS) de grafos gerados aleatoriamente
+         *  as funções estao apenas comentadas
+         */
+
+        String fileName = "graph11.txt"; //colocar aqui um dos grafos contidos na pasta
+        
+        BufferedReader br = new BufferedReader(new FileReader(fileName)); //lendo arquivo de dados
+        String linha;
+        String splitLine[] = new String[2];
+        int amountOfGraphs, origem, destino;
+
+        linha = br.readLine();
+        splitLine = linha.split(" ");
+
+        Grafo g = new Grafo(Integer.parseInt(splitLine[0])+1);
+        amountOfGraphs = Integer.parseInt(splitLine[1]);
+
+        for(int i = 0; i < amountOfGraphs; i++) {
+            linha = br.readLine();
+            splitLine = linha.split(" ");
+
+            g.addAresta(Integer.parseInt(splitLine[0]), Integer.parseInt(splitLine[1]));
+            v.add(Integer.parseInt(splitLine[0]));
+            w.add(Integer.parseInt(splitLine[1]));
         }
+        br.close();
+ 
 
         long starTime = System.currentTimeMillis(); //Tempo de execução dos tres metodos
 
         System.out.println("\n_______________________________________________________________________________________________\n");
-        System.out.println("Vsize: " + v.size());
         for(int i = 0; i < v.size(); i++) {
             if (g.hasTwoDisjointPaths(v.get(i), w.get(i))) {
                 System.out.println("Existe cum ciclo entre (" +v.get(i)+ " e " + w.get(i)+ ")");
@@ -228,6 +291,7 @@ public class Grafo {
                 System.out.println("Nào há ciclos neste grafo!");
             }
         }
+        //g.encontrarCaminhosDisjuntos(origem, destino); outra função feita para encontrar caminhos disjuntos
         System.out.println("\n_______________________________________________________________________________________________");
 
         System.out.print("***      ***      ***      ***      ***      ***      ***      ***      ***      ***      ***");
@@ -246,19 +310,3 @@ public class Grafo {
         System.out.println("\n>>> O tempo de execução de todos os tres metodos com um [Grafo de ("+ g.V +") Vertices] foi de: " + (System.currentTimeMillis()-starTime)/1000 + "s\n\n");
     }
 }
-
-
-/* 
- * OBS:
- * 1- A função 'hasTwoDisjointPaths' aparentemente não esta funcionando corretamente, precisamos usar ela pois faz parte da tarefa.
- * 
- * 2- Com essa clase de geração de grafos aleatórios (GFGRandomGraph), não esta existindo nenhuma articulação e sempre esta dando apenas 1 componente biconexo, 
- *    verificar se esse gerador serve para o nosso TP (o link de onde peguei o cod esta na primeira linha da classe).
- * 2.1- Quando solicitado gerar numero de vertices muito grande costuma não rodar
- * 2.2- Se alguem achar alguma função que gere grafos aleatoriamente melhor do que essa será 100% bem vindo.
- * 
- * 3- Para entender como eu fui adicionando as arestas rode a main da classe "GFGRandomGraph" e veja como é printado o grafo, assim
- *    será possiel entender como eu fui salvando o vertice e seus adjacestes
- * 
- * 4- É necessario criar um pequeno input para o usuário digitar a quantidade de vertices que ele deseja (100, 1.000, 10.000 , 100.000 ...)
- */

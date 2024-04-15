@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% Template de Artigo Adaptado para Trabalho de Diplomação do ICEI %%%%%%%%%%%%%%%%%%%%%%%%
+%% codificação UTF-8 - Abntex - Latex -  							     %%
+%% Autor:    Fábio Leandro Rodrigues Cordeiro  (fabioleandro@pucminas.br)                            %% 
+%% Co-autor: Prof. João Paulo Domingos Silva  e Harison da Silva                                     %%
+%% Revisores normas NBR (Padrão PUC Minas): Helenice Rego Cunha e Prof. Theldo Cruz                  %%
+%% Versão: 1.0     13 de março 2014                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\esp Introdução}
+
+A busca pela Árvore Geradora Mínima é um campo com uma variedade de estudos e soluções disponíveis. Sua definição envolve encontrar, em um grafo não direcionado com N vértices, o conjunto de (N-1) arestas de menor custo que conectam todos os N vértices do grafo, resultando na árvore geradora com a menor soma dos pesos das arestas. Embora os métodos mais conhecidos para resolver esse problema sejam o algoritmo de Kruskal e o de Prim, em muitos casos do mundo real, apenas um grafo direcionado pode resolver um problema específico, levantando a necessidade de obter a Árvore Geradora Mínima para um grafo direcionado.
+
+A Árvore Geradora Mínima é definida como o menor conjunto de arestas, com o menor peso possível, que partindo de um vértice raiz consegue alcançar todos os outros vértices em um grafo direcionado. Este artigo foca em encontrar a Árvore Geradora Mínima dentro de um grafo direcionado, a partir de uma raiz previamente determinada.
+
+O algoritmo para obter a Árvore Geradora Mínima foi descoberto de forma independente por Edmonds, Chu e Bock, com uma complexidade de O(nm). No entanto, essa complexidade pode se tornar cúbica dependendo da densidade do grafo. Isso incentivou o desenvolvimento de melhorias por Tarjan e Gabow, entre outros, que refinaram esse algoritmo. A versão de Tarjan alcançou uma complexidade de O(min(n², m log n)), enquanto a de Gabow et al. chegou a O(n log n + m).
+
+Este estudo fornece descrições e implementações de cada um dos três algoritmos, assim como seus resultados. Os códigos implementados estão acessíveis em um repositório hospedado no >\href{https://github.com/thiagoteixas/TP-1-Grafos}{GitHub}<. 
+
+
+\section{\esp Desenvolvimento}
+
+Para estabelecer uma formatação padrão dos grafos para os experimentos com cada um dos algoritmos de Árvore Geradora Mínima, foram desenvolvidas três classes principais: Main, Grafo e GFGRandomGraph. Essas classes constituem a base do projeto. Essas classes fornecem funcionalidades para manipular e gerar grafos, além de realizar análises como encontrar articulações e componentes biconexos.
+
+\subsection{\esp Main}
+
+O Main contém a interface do programa, onde o usuário informa apenas o número de vértices para geração a da Árvore Geradora Mínima que será sempre aleatório.
+
+\begin{itemize}
+    \item \textbf{main(String[] args):} No método principal, o programa solicita ao usuário que escolha o número de vértices do grafo que será gerado. Em seguida, o programa gera um grafo aleatório com o número de vértices especificado pelo usuário, verifica a existência de dois caminhos internamente disjuntos entre todos os pares de vértices e encontra as articulações e os componentes biconexos no grafo, exibindo também o método proposto por Tarjan e o tempo de execução de todos os três métodos.
+\end{itemize}  
+
+\subsection{\esp Grafo}
+A classe Grafo representa um grafo não direcionado e implementa métodos para adicionar arestas, verificar a existência de dois caminhos internamente disjuntos e encontrar articulações e componentes biconexos.
+
+\begin{itemize}
+    \item \textbf{Atributos} 
+    \subitem \textbf{Número de vértices:} Número de vértices do grafo.
+    \subitem \textbf{ADJ:} Lista de adjacência para representar o grafo. 
+    \subitem \textbf{Tempo: }Variável utilizada para controlar o tempo durante a busca em profundidade.
+\end{itemize}  
+
+\subsubsection{Metódos}
+\begin{itemize}
+    \item \textbf{Grafo(int v):} Construtor que inicializa o grafo com o número de vértices especificado.
+    \item \textbf{addAresta(int v, int w):} Adiciona uma aresta entre os vértices v e w.
+    \item \textbf{hasTwoDisjointPaths(int u, int v):} Verifica se existem dois caminhos internamente disjuntos entre os vértices u e v.
+    \item \textbf{dfs(int u, boolean[] visited, int avoid):} Realiza uma busca em profundidade (DFS) a partir do vértice u, evitando o vértice avoid.
+    \item \textbf{dfs(int u, boolean[] visited, int avoid, boolean[] visitedFirst):} Realiza uma DFS a partir do vértice u, evitando o vértice avoid e marcando os vértices visitados durante a primeira DFS.
+    \item \textbf{findArticulacoes():} Encontra as articulações no grafo.
+    \item \textbf{findArticulacoesDfs(int u, boolean[] visitado, int[] disc, int[] low, int[] parent, List<Integer> articulacoes):} Algoritmo de busca em profundidade modificado para encontrar articulações.
+    \item \textbf{findBiconnectedComponents():} Encontra os componentes biconexos no grafo.
+    \item \textbf{bccDfs(int u, int[] disc, int[] low, Stack<Integer> st, boolean[] stackMember, int time, List<List<Integer>> bcc):} Algoritmo de busca em profundidade para encontrar componentes biconexos.
+\end{itemize}  
+
+\subsection{GFGRandomGraph}
+Essa classe é responsável por gerar um grafo aleatório com um número especificado de vértices.
+
+\begin{itemize}
+    \item \textbf{Atributos} 
+    \subitem \textbf{Vertices:} Número de vértices do grafo.
+    \subitem \textbf{Edges:} Número de arestas do grafo.
+    \subitem \textbf{AdjacencyList:} Lista de adjacência para representar o grafo.
+\end{itemize}  
+
+\subsubsection{Metódos}
+\begin{itemize}
+    \item \textbf{GFGRandomGraph(int numVertices):} Construtor que gera um grafo aleatório com o número especificado de vértices.
+    \item \textbf{addEdge(int v, int w):} Adiciona uma aresta entre os vértices v e w.
+    \item \textbf{main(String[] args):} Método principal para testar a geração de um grafo aleatório.
+    \end{itemize}
+
+    
+\section{\esp Implementação}
+Para realização dos experimentos, utilizamos três grafos direcionados e ponderados, com 100, 1000, 10000 e 100000 vértices, respectivamente. No programa, os testes foram realizados exclusivamente utilizando o código. O usuário tem a opção de gerar um grafo aleatório especificando apenas o número total de vértices. Após a geração do grafo, o usuário pode escolher entre os seguintes métodos.
+\begin{itemize}
+    \item \textbf{Método 1:} Verifica a existência de dois caminhos internamente disjuntos (ou um ciclo) entre cada par de vértices do bloco.
+    \item \textbf{Método 2:} Identifica articulações testando a conectividade após a remoção de cada vértice.
+    \item \textbf{Método 3:} Tarjan.
+\end{itemize}
+
+\subsubsection{Tarjan}
+O Método de Tarjan, desenvolvido por Robert Tarjan em 1972, é um algoritmo para encontrar componentes fortemente conectados em um grafo direcionado adaptado para achar a Árvore Geradora Mínima. Um componente fortemente conectado em um grafo é um conjunto máximo de vértices onde existe um caminho direcionado entre cada par de vértices.Ele usa uma abordagem baseada em Busca em Largura para explorar o grafo. Ele atribui a cada vértice dois valores: o tempo de descoberta (quando o vértice foi descoberto durante a busca em profundidade) e o valor "baixo" (o menor tempo de descoberta de qualquer vértice na subárvore da busca em profundidade a partir deste vértice). Usando esses valores, o algoritmo é capaz de identificar os componentes fortemente conectados no grafo.
+
+\section{Experimentos}
+Após a implementação dos algoritmos, realizamos testes com cada um deles utilizando os mesmos grafos predefinidos, sendo estes os de 100, 1000, 10000 e 100000 vértices, além de gerações e caminhos aleatórios. Os códigos nos quais foram realizados os testes estão disponíveis no >\href{https://github.com/thiagoteixas/TP-1-Grafos}{GitHub}<.
+
+\subsection{Arquivos Gerados Aleatóriamente}
+
+Para os grafos gerados, os seguintes resultados foram obtidos para cada um dos algoritmos:
+
+\begin{itemize}
+    \item \textbf{Grafo de 100 vértices:} 
+    \begin{itemize}
+        \item \textbf{Método 1:} Tempo de excução: 0ms
+        \item \textbf{Método 2:} Tempo de excução: 1ms
+        \item \textbf{Tarjan:} Tempo de excução: 1ms
+    \end{itemize}
+    \item \textbf{Grafo de 1000 vértices:} 
+    \begin{itemize}
+        \item \textbf{Método 1: } Tempo de excução: 18ms
+        \item \textbf{Método 2:} Tempo de excução: 18ms
+        \item \textbf{Tarjan} Tempo de excução: 16ms
+    \end{itemize}
+    \item \textbf{Grafo de 10000 vértices:}
+    \begin{itemize}
+        \item \textbf{Método 1:} Tempo de excução: 27ms
+        \item \textbf{Método 2:} Tempo de excução: 27ms
+        \item \textbf{Tarjan:} Tempo de excução: 24ms
+    \end{itemize}
+     \item \textbf{Grafo de 100000 vértices:}
+    \begin{itemize}
+    \item \textbf{Não foi possível realizar teste, pois o grafo não foi concluído.}
+    \end{itemize}
+    
+    \item \textbf{Tempo de execução de todos os três métodos}
+    \begin{itemize}
+        \item \textbf{Grafo de 100 vértices: } 0s
+        \item \textbf{Grafo de 1000 vértices: } 177s
+        \item \textbf{Grafo de 10000 vértices: } 509s
+        \item \textbf{Grafo de 100000 vértices: }Não foi possível realizar teste, pois o grafo não foi concluído.
+    \end{itemize}
+    
+\end{itemize}
+
+\subsection{Arquivos Predefinidos}
+
+Para os grafos predefinidos, os seguintes resultados foram obtidos para cada um dos algoritmos:
+
+\begin{itemize}
+    \item \textbf{Grafo de 100 vértices:} 
+    \begin{itemize}
+        \item \textbf{Método 1:} Tempo de excução: 0ms
+        \item \textbf{Método 2:} Tempo de excução: 1ms
+        \item \textbf{Tarjan:} Tempo de excução: 1ms
+    \end{itemize}
+    \item \textbf{Grafo de 1000 vértices:} 
+    \begin{itemize}
+        \item \textbf{Método 1: } Tempo de excução: 8ms
+        \item \textbf{Método 2:} Tempo de excução: 8ms
+        \item \textbf{Tarjan} Tempo de excução: 6ms
+    \end{itemize}
+    \item \textbf{Grafo de 10000 vértices:}
+    \begin{itemize}
+        \item \textbf{Método 1:} Tempo de excução: 13ms
+        \item \textbf{Método 2:} Tempo de excução: 13ms
+        \item \textbf{Tarjan:} Tempo de excução: 7ms
+    \end{itemize}
+     \item \textbf{Grafo de 100000 vértices:}
+    \begin{itemize}
+        \item \textbf{Método 1:} Tempo de excução:  315ms
+        \item \textbf{Método 2:} Tempo de excução: 315ms
+        \item \textbf{Tarjan:} Tempo de excução: 277ms
+    \end{itemize}
+    
+    \item \textbf{Tempo de execução de todos os três métodos}
+    \begin{itemize}
+        \item \textbf{Grafo de 100 vértices: } 0s
+        \item \textbf{Grafo de 1000 vértices: } 177s
+        \item \textbf{Grafo de 10000 vértices: } 509s
+        \item \textbf{Grafo de 100000 vértices: } 902s
+    \end{itemize}
+    
+\end{itemize}
+
+Após desenvolver, implementar e analisar os resultados dos algoritmos para o problema, vários aspectos se destacam no comportamento de cada método para diferentes tipos de grafos.
+
+Os experimentos revelaram que os algoritmos desempenham bem em grafos do mundo real, que apresentam características mais comuns em situações cotidianas. No entanto, em grafos densos gerados aleatoriamente, os algoritmos demonstraram um desempenho insatisfatório devido à sua alta complexidade.
+
+Portanto, os algoritmos implementados apresentam resultados satisfatórios principalmente em cenários do mundo real, onde raramente alcançam o pior caso em termos de tempo de execução. Recomenda-se, em futuras pesquisas, investigar por que as instâncias do mundo real são mais simples e buscar melhorar o tempo de execução em grafos gerados aleatoriamente.
+
+\subsection{\esp Conclusão}
+Neste trabalho foi possível analisar a diferença de desempenho entre diferentes algoritmos para encontrar a Árvore Geradora Mínima em grafos direcionados. Vemos que a escolha do algoritmo tem importância fundamental porque cada método possui suas próprias características e complexidades, influenciando diretamente no tempo de execução e na eficiência da solução encontrada.
+
+Os experimentos realizados revelaram que, em situações do mundo real, onde os grafos tendem a ser menos densos, os algoritmos demonstraram um desempenho satisfatório. No entanto, em cenários com grafos densos, como os gerados aleatoriamente, a complexidade dos algoritmos pode resultar em tempos de execução prolongados e, consequentemente, em soluções menos eficientes.
+
+Portanto, a escolha do algoritmo adequado é crucial para garantir um desempenho ótimo na busca pela Árvore Geradora Mínima, especialmente em ambientes onde a eficiência computacional é uma preocupação importante. Esta análise destaca a necessidade contínua de pesquisa e desenvolvimento de técnicas mais eficazes para lidar com diferentes tipos de grafos e melhorar o desempenho dos algoritmos existentes.
+
+% \subsection{\esp Trabalhos futuros}
+% 
+% Sugestões de estudos posteriores são ser adicionados subseção deste capítulo de conclusão.

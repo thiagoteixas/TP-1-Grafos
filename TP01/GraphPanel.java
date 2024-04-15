@@ -45,7 +45,7 @@ public class GraphPanel extends JPanel {
         int x = rand.nextInt(getWidth() - vertexRadius * 2) + vertexRadius;
         int y = rand.nextInt(getHeight() - vertexRadius * 2) + vertexRadius;
         vertexCoordinates.put(i, new Point(x, y));
-        System.out.println("Vertex " + i + ": (" + x + ", " + y + ")"); // Debug para verificar as coordenadas
+        // System.out.println("Vertex " + i + ": (" + x + ", " + y + ")"); // Debug para verificar as coordenadas
       }
     }
   }

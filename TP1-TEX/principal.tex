@@ -1,0 +1,125 @@
+\documentclass[a4paper,12pt,Times]{article}
+\usepackage{abakos}  %pacote com padrão da Abakos baseado no padrão da PUC
+\usepackage{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Capa da revista
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\setcounter{page}{80} %iniciar contador de pagina de valor especificado
+\newcommand{\monog}{Métodos para obtenção da árvore geradora mínima}
+\newcommand{\monogES}{Model - Magazine Abakós - ICEI - PUC Minas}
+\newcommand{\tipo}{Artigo }  % Especificar a seção tipo do trabalho: Artigo, Resumo, Tese, Dociê etc
+\newcommand{\origem}{Brasil}
+\newcommand{\editorial}{\textbf{Abakos}, Belo Horizonte,v. 1, n. 1, p. 00-00, Jul. 2013 - ISSN: 2316-9451}  % p. xx-xx – páginas inicial-final do artigo
+% \newcommand{\lcc}{\scriptsize{Licença Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported}}
+
+%%%%%%%%%%%%%%%%%INFORMAÇÕES SOBRE AUTOR PRINCIPAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\AutorA}{Fabio Franco de Azevedo}
+\newcommand{\funcaoA}{}
+\newcommand{\emailA}{fabio.franco@sga.pucminas.br}
+\newcommand{\cursA}{Bacharel em Ciência da Computação}
+
+\newcommand{\AutorB}{Pedro Rafael Madeira Vasconcelos}
+\newcommand{\funcaoB}{}
+\newcommand{\emailB}{pedro.madeira@sga.pucminas.br}
+\newcommand{\cursB}{Bacharel em Ciência da Computação}
+
+\newcommand{\AutorC}{Thiago Teixeira Oliveira}
+\newcommand{\funcaoC}{}
+\newcommand{\emailC}{thiago.oliveira.1205087@sga.pucminas.br}
+\newcommand{\cursC}{Bacharel em Ciência da Computação}
+
+% Definir macros para o nome da Instituição, da Faculdade, etc.
+\newcommand{\univ}{Pontifícia Universidade Católica de Minas Gerais}
+
+\newcommand{\keyword}[1]{\textsf{#1}}
+
+\begin{document}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Pagina de titulo
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{flushleft}
+
+\begin{minipage} [c][5cm][b]{16.5cm} % a primeira minipágina tem uma altura de 1.5cm e uma largura de 2.3cm.
+% comando que introduz o logo da escola que nesta altura já terá de estar na pasta imagens que 
+%por sua vez está na pasta onde se guardou o arquivo tex. E introduzimos essa imagem com a mesma altura da minipage.
+\includegraphics[scale=1.1]{figuras/pucmg.png} 
+\end{minipage}
+
+ \vspace{0cm} {
+ \singlespacing \Large{\monog \symbolfootnote[1]{Artigo apresentado à Revista Abakos} \\ }
+  \normalsize{\monogES}
+ }
+\end{flushleft}
+\begin{flushright}
+\singlespacing 
+\normalsize{\AutorA \footnote{\funcaoA \cursA, \origem -- \emailA }} \\
+\normalsize{\AutorB \footnote{\funcaoB \cursB, \origem -- \emailB }} \\
+\normalsize{\AutorC \footnote{\funcaoC \cursC, \origem -- \emailC }} \\
+% \normalsize{\AutorD \footnote{\funcaoD \\ Pais de origem: \origemD. E-mail: \emailD}} \\
+%deixar com o valor `0` e usar o '*' no inicio da frase
+% \symbolfootnote[0]{Artigo recebido em 10 de julho de 1983 e aprovado em 29 de maio 2012}
+\end{flushright}
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+Este documento tem como objetivo resolver o problema da obtenção da árvore geradora mínima em grafos direcionados ponderados por meio de dois métodos desenvolvidos por nós. Utilizando a linguagem Java, implementamos esses métodos e conduzimos uma análise de seu desempenho e comportamento. O programa permite ao usuário gerar um grafo aleatório especificando o número de vértices ou abrir um arquivo de texto contendo um grafo previamente salvo no diretório onde o código está localizado. O método 1( verifica a existência de dois caminhos internamente disjuntos (ou um ciclo) entre cada par de vértices no bloco. Essa verificação é crucial para identificar estruturas fundamentais no grafo que influenciam na formação da árvore geradora mínima), 
+método 2 (Identifica articulações testando a conectividade após a remoção de cada vértice. Essa abordagem permite detectar pontos de articulação que, quando removidos, podem resultar em uma desconexão do grafo ou na formação de componentes conexos menores),
+além desses métodos, o método de Tarjan também foi utilizado para resolver o problema da árvore geradora mínima em grafos direcionados ponderados. Ele é um algoritmo clássico que encontra componentes fortemente conectados em um grafo direcionado e pode ser adaptado para encontrar a árvore geradora mínima.
+
+\\\textbf{\keyword{Palavras-chave: }} Grafos Direcionados, Tarjan, Arborescência Geradora Mínima, Árvore Geradora Mínima, Pesquisa, Programa.
+
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage 
+\selectlanguage{english}
+\begin{abstract}
+\noindent
+This document aims to address the problem of obtaining the Minimum Spanning Tree (MST) in weighted directed graphs through two methods we have developed. Using the Java programming language, we implemented these methods and conducted an analysis of their performance and behavior. The program allows the user to generate a random graph by specifying the number of vertices or to open a text file containing a previously saved graph in the directory where the code is located. Method 1 checks for the existence of two internally disjoint paths (or a cycle) between each pair of vertices in the block. This verification is crucial for identifying fundamental structures in the graph that influence the formation of the minimum spanning tree. Method 2 identifies articulation points by testing connectivity after the removal of each vertex. This approach allows for the detection of articulation points that, when removed, can result in a disconnection of the graph or the formation of smaller connected components. In addition to these methods, Tarjan's (1977) method was also used to solve the problem of the minimum spanning tree in weighted directed graphs. It is a classic algorithm that finds strongly connected components in a directed graph and can be adapted to find the Minimum Spanning Tree.
+\\\textbf{\keyword{Keywords: }} Directed Graphs, Tarjan, Minimum Spanning Arborescence, Minimum Spanning Tree, Research, Program.
+\end{abstract}
+
+\selectlanguage{brazilian}
+ \onehalfspace  % espaçamento 1.5 entre linhas
+ \setlength{\parindent}{1.25cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% INICIO DO TEXTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{textos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIM DO TEXTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \selectlanguage{brazil}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Inicio bibliografia
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \newpage
+ \singlespace{
+ \bibliographystyle{abntex2-alf}
+ \bibliography{bibliografia}
+[1] MAXIMILIAN BÖTHER; KISSIG, O.; WEYAND, C. Efficiently Computing Directed Minimum Spanning Trees. Society for Industrial and Applied Mathematics eBooks, p. 86–95, 14 apr. 2024.
+
+[2] TARJAN, R. E. Finding optimum branchings. Networks, v. 7, n. 1, p. 25–35, 1977.
+
+‌
+[3] Graphs. Disponível em: <https://algs4.cs.princeton.edu/40graphs/>. Acesso em: 14 apr. 2024.
+
+[4] TarjanSCC.java. Disponível em: <http://surl.li/mwiam>. Acesso em: 14 apr. 2024.
+
+[5] GabowSCC.java. Disponível em: <https://acervolima.com/como-criar-um-grafico-aleatorio-usando-a-geracao-de-borda-aleatoria-em-java/>. Acesso em: 14 apr. 2024.
+
+[8] ChatGPT. Disponível em: <https://chat.openai.com/share/9977f01d-f864-4609-b61f-1cf1e40922bd>. Acesso em: 14 apr. 2024.
+
+‌
+‌
+ }
+
+\end{document}
